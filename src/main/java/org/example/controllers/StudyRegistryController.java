@@ -107,16 +107,51 @@ public class StudyRegistryController {
         return plan;
     }
 
-    private void handleSetSteps(StudyPlan studyPlan){
+    private void handleSetSteps(StudyPlan studyPlan) {
         handleMethodHeader("(Study Plan Edit)");
+
         System.out.println("Type the following info: String firstStep, String resetStudyMechanism, String consistentStep, " +
                 "String seasonalSteps, String basicSteps, String mainObjectiveTitle, String mainGoalTitle, String mainMaterialTopic, " +
                 "String mainTask, @NotNull  Integer numberOfSteps, boolean isImportant. " +
                 "The Date to start is today, the date to end is x days from now, type the quantity of days\n");
-        LocalDateTime createdAT = LocalDateTime.now();
-        studyPlan.assignSteps(getInput(), getInput(), getInput(), getInput(), getInput(), getInput(), getInput(), getInput(), getInput(),
-                Integer.parseInt(getInput()), Boolean.parseBoolean(getInput()), createdAT, createdAT.plusDays(Long.parseLong(getInput())));
+
+        LocalDateTime createdAt = LocalDateTime.now();
+
+        // Coletando entradas
+        String firstStep = getInput();
+        String resetStudyMechanism = getInput();
+        String consistentStep = getInput();
+        String seasonalSteps = getInput();
+        String basicSteps = getInput();
+        String mainObjectiveTitle = getInput();
+        String mainGoalTitle = getInput();
+        String mainMaterialTopic = getInput();
+        String mainTask = getInput();
+        int numberOfSteps = Integer.parseInt(getInput());
+        boolean isImportant = Boolean.parseBoolean(getInput());
+        long daysToAdd = Long.parseLong(getInput());
+
+        // Criando o objeto de parâmetros
+        StudyStepParams params = new StudyStepParams(
+                firstStep,
+                resetStudyMechanism,
+                consistentStep,
+                seasonalSteps,
+                basicSteps,
+                mainObjectiveTitle,
+                mainGoalTitle,
+                mainMaterialTopic,
+                mainTask,
+                numberOfSteps,
+                isImportant,
+                createdAt,
+                createdAt.plusDays(daysToAdd)
+        );
+
+        // Chamando o método com o objeto refatorado
+        studyPlan.assignSteps(params);
     }
+
 
     private StudyGoal getStudyGoalInfo(){
         handleMethodHeader("(Study Goal Creation)");
