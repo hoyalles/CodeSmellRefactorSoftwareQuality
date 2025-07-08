@@ -19,18 +19,23 @@ public class SearchLog {
         numUsages = 0;
         isLocked = false;
     }
+
     public void addSearchHistory(String searchHistory) {
         this.searchHistory.add(searchHistory);
     }
+
     public List<String> getSearchHistory() {
         return searchHistory;
     }
+
     public void setSearchHistory(List<String> searchHistory) {
         this.searchHistory = searchHistory;
     }
+
     public Map<String, Integer> getSearchCount() {
         return searchCount;
     }
+
     public void setSearchCount(Map<String, Integer> searchCount) {
         this.searchCount = searchCount;
     }
@@ -57,5 +62,21 @@ public class SearchLog {
 
     public void setLogName(String logName) {
         this.logName = logName;
+    }
+
+    // Método movido e adaptado aqui
+    public List<String> handleSearch(String text){
+        List<String> results = new ArrayList<>();
+        results.addAll(org.example.studycards.CardManager.getCardManager().searchInCards(text));
+        results.addAll(org.example.studyplanner.HabitTracker.getHabitTracker().searchInHabits(text));
+        results.addAll(org.example.studyplanner.TodoTracker.getInstance().searchInTodos(text));
+        results.addAll(org.example.studyregistry.StudyMaterial.getStudyMaterial().searchInMaterials(text));
+        results.addAll(org.example.studyregistry.StudyTaskManager.getStudyTaskManager().searchInRegistries(text));
+
+        this.addSearchHistory(text);
+        this.setNumUsages(this.getNumUsages() + 1);
+
+        results.add("\nLogged in: " + this.getLogName());
+        return results;
     }
 }
