@@ -255,12 +255,32 @@ public class StudyRegistryController {
     }
 
     private void getWeekInfo(){
-        System.out.println("(Study Task Manager Week Set Up) Type the following info: String planName, String objectiveTitle, " +
-                "String objectiveDescription, String materialTopic, String materialFormat, String goal, String reminderTitle, " +
-                "String reminderDescription, String mainTaskTitle, String mainHabit, String mainCardStudy");
-        studyTaskManager.setUpWeek(getInput(), getInput(), getInput(), getInput(), getInput(), getInput(), getInput(), getInput(),
-                getInput(), getInput(), getInput());
+        System.out.println("(Study Task Manager Week Set Up) Type the following info:");
+        System.out.println("planName, objectiveTitle, objectiveDescription, materialTopic, materialFormat, goal, reminderTitle, reminderDescription, mainTaskTitle, mainHabit, mainCardStudy");
+
+        // Captura as entradas separadamente
+        String planName = getInput();
+        String objectiveTitle = getInput();
+        String objectiveDescription = getInput();
+        String materialTopic = getInput();
+        String materialFormat = getInput();
+        String goal = getInput();
+        String reminderTitle = getInput();
+        String reminderDescription = getInput();
+        String mainTaskTitle = getInput();
+        String mainHabit = getInput();
+        String mainCardStudy = getInput();
+
+        // Cria o objeto parâmetro
+        WeekSetupParams params = new WeekSetupParams(
+                planName, objectiveTitle, objectiveDescription, materialTopic, materialFormat, goal,
+                reminderTitle, reminderDescription, mainTaskTitle, mainHabit, mainCardStudy
+        );
+
+        // Passa o objeto para o método refatorado
+        studyTaskManager.setUpWeek(params);
     }
+
 
     private void handleSetUpWeek(){
         getWeekInfo();
