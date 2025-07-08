@@ -82,17 +82,41 @@ public class StudyObjective extends Registry{
         this.startDate= LocalDateTime.of(year, month, day, 0, 0);
     }
 
-    public void handleSetObjective(Integer id, Integer priority, Integer practicedDays, int day, int month, int year, String name, String title, String description, String topic, String objectiveInOneLine, String objectiveFullDescription, String motivation, Double duration, boolean isActive){
-        handleSetRegistry(id, name, priority, isActive);
-        handleSetTextualInfo(title, description, topic, objectiveInOneLine, objectiveFullDescription, motivation);
-        handleSetTime(practicedDays, day, month, year, duration);
+    public void handleSetObjective(RegistryParams registry, TextualInfoParams textual, TimeParams time) {
+        handleSetRegistry(registry.id, registry.name, registry.priority, registry.isActive);
+        handleSetTextualInfo(textual.title, textual.description, textual.topic, textual.objectiveInOneLine, textual.objectiveFullDescription, textual.motivation);
+        handleSetTime(time.practicedDays, time.day, time.month, time.year, time.duration);
     }
 
     public int handleSetObjectiveAdapter(List<Integer> intProperties, List<String> stringProperties, Double duration, boolean isActive){
-        handleSetObjective(intProperties.get(0), intProperties.get(1), intProperties.get(2), intProperties.get(3), intProperties.get(4), intProperties.get(5),
-                stringProperties.get(0), stringProperties.get(1), stringProperties.get(2), stringProperties.get(3), stringProperties.get(4), stringProperties.get(5), stringProperties.get(6), duration, isActive);
-        return intProperties.get(0);
+        RegistryParams registry = new RegistryParams(
+                intProperties.get(0), // id
+                stringProperties.get(0), // name
+                intProperties.get(1), // priority
+                isActive
+        );
+
+        TextualInfoParams textual = new TextualInfoParams(
+                stringProperties.get(1), // title
+                stringProperties.get(2), // description
+                stringProperties.get(3), // topic
+                stringProperties.get(4), // objectiveInOneLine
+                stringProperties.get(5), // objectiveFullDescription
+                stringProperties.get(6)  // motivation
+        );
+
+        TimeParams time = new TimeParams(
+                intProperties.get(2), // practicedDays
+                intProperties.get(3), // day
+                intProperties.get(4), // month
+                intProperties.get(5), // year
+                duration
+        );
+
+        handleSetObjective(registry, textual, time);
+        return intProperties.get(0); // Retorna o id
     }
+
 
     public String getDescription() {
         return description;

@@ -37,16 +37,46 @@ public class StudyPlan extends Registry{
         steps.add(toAdd);
     }
 
-    public void assignSteps(String firstStep, String resetStudyMechanism, String consistentStep, String seasonalSteps,
-                            String basicSteps, String mainObjectiveTitle, String mainGoalTitle, String mainMaterialTopic,
-                            String mainTask, Integer numberOfSteps, boolean isImportant, LocalDateTime startDate, LocalDateTime endDate) {
+    public void assignSteps(StudyStepParams params) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
-        this.steps = new ArrayList<>(Arrays.asList(firstStep, resetStudyMechanism, consistentStep, seasonalSteps, basicSteps, "Number of steps: " + numberOfSteps.toString(), "Is it important to you? " + isImportant, startDate.format(formatter), endDate.format(formatter), mainObjectiveTitle, mainGoalTitle, mainMaterialTopic, mainTask));
+        this.steps = new ArrayList<>(Arrays.asList(
+                params.firstStep,
+                params.resetStudyMechanism,
+                params.consistentStep,
+                params.seasonalSteps,
+                params.basicSteps,
+                "Number of steps: " + params.numberOfSteps,
+                "Is it important to you? " + params.isImportant,
+                params.startDate.format(formatter),
+                params.endDate.format(formatter),
+                params.mainObjectiveTitle,
+                params.mainGoalTitle,
+                params.mainMaterialTopic,
+                params.mainTask
+        ));
     }
 
-    public void handleAssignSteps(List<String> stringProperties, Integer numberOfSteps, boolean isImportant, LocalDateTime startDate, LocalDateTime endDate){
-        assignSteps(stringProperties.get(0), stringProperties.get(1), stringProperties.get(2), stringProperties.get(3), stringProperties.get(4), stringProperties.get(5), stringProperties.get(6), stringProperties.get(7), stringProperties.get(8), numberOfSteps, isImportant, startDate, endDate);
+
+    public void handleAssignSteps(List<String> stringProperties, Integer numberOfSteps, boolean isImportant,
+                                  LocalDateTime startDate, LocalDateTime endDate) {
+        StudyStepParams params = new StudyStepParams(
+                stringProperties.get(0),
+                stringProperties.get(1),
+                stringProperties.get(2),
+                stringProperties.get(3),
+                stringProperties.get(4),
+                stringProperties.get(5),
+                stringProperties.get(6),
+                stringProperties.get(7),
+                stringProperties.get(8),
+                numberOfSteps,
+                isImportant,
+                startDate,
+                endDate
+        );
+        assignSteps(params);
     }
+
 
 }
