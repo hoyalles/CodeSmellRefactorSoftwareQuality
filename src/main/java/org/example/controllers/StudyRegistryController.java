@@ -58,9 +58,32 @@ public class StudyRegistryController {
                 "Integer practicedDays, int day, int month, int year, String name, String title, String description, " +
                 "String topic, String objectiveInOneLine, String objectiveFullDescription, String motivation, " +
                 "Double duration, boolean isActive  \n");
-        objective.handleSetObjective(Integer.parseInt(getInput()), Integer.parseInt(getInput()),Integer.parseInt(getInput()),Integer.parseInt(getInput()),Integer.parseInt(getInput()),
-                Integer.parseInt(getInput()), getInput(), getInput(), getInput(), getInput(), getInput(), getInput(), getInput(),
-                Double.parseDouble(getInput()), Boolean.parseBoolean(getInput()));
+        Integer id = Integer.parseInt(getInput());
+        Integer priority = Integer.parseInt(getInput());
+        Integer practicedDays = Integer.parseInt(getInput());
+        int day = Integer.parseInt(getInput());
+        int month = Integer.parseInt(getInput());
+        int year = Integer.parseInt(getInput());
+
+        String name = getInput();
+        String title = getInput();
+        String description = getInput();
+        String topic = getInput();
+        String objectiveInOneLine = getInput();
+        String objectiveFullDescription = getInput();
+        String motivation = getInput();
+
+        Double duration = Double.parseDouble(getInput());
+        boolean isActive = Boolean.parseBoolean(getInput());
+
+// Criação dos objetos de parâmetro
+        RegistryParams registry = new RegistryParams(id, name, priority, isActive);
+        TextualInfoParams textual = new TextualInfoParams(title, description, topic, objectiveInOneLine, objectiveFullDescription, motivation);
+        TimeParams time = new TimeParams(practicedDays, day, month, year, duration);
+
+// Chamada do método correto
+        objective.handleSetObjective(registry, textual, time);
+
     }
 
     private StudyObjective getStudyObjectiveInfo(){
