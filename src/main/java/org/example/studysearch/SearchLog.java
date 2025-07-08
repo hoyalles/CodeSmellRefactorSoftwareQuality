@@ -64,9 +64,11 @@ public class SearchLog {
         this.logName = logName;
     }
 
-    // Método movido e adaptado aqui
+    // Método movido e adaptado para SearchLog
     public List<String> handleSearch(String text){
         List<String> results = new ArrayList<>();
+
+        // Inclui várias buscas de outras classes para exemplo completo
         results.addAll(org.example.studycards.CardManager.getCardManager().searchInCards(text));
         results.addAll(org.example.studyplanner.HabitTracker.getHabitTracker().searchInHabits(text));
         results.addAll(org.example.studyplanner.TodoTracker.getInstance().searchInTodos(text));
