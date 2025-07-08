@@ -7,34 +7,76 @@ public abstract class Reference {
     private String accessRights;
     private String license;
     private boolean isDownloadable;
-    private int rating;
+    private int rating; // 0–5
     private String language;
     private int viewCount;
     private int downloadCount;
     private int shareCount;
 
+    // Métodos com comportamento (evitando apenas setters/gets)
+
+    public void view() {
+        this.viewCount++;
+    }
+
+    public void download() {
+        if (isDownloadable) {
+            this.downloadCount++;
+        } else {
+            throw new IllegalStateException("Download não permitido para esta referência.");
+        }
+    }
+
+    public void share() {
+        this.shareCount++;
+    }
+
+    public boolean isPublicAccess() {
+        return "public".equalsIgnoreCase(accessRights);
+    }
+
+    public boolean isHighRated() {
+        return rating >= 4;
+    }
+
+    public String summary() {
+        return String.format("'%s' (%s) - Avaliação: %d/5 - Idioma: %s", title, description, rating, language);
+    }
+
+    public double popularityScore() {
+        return viewCount * 0.5 + downloadCount * 1.5 + shareCount * 2.0;
+    }
+
+    public boolean isRelevant() {
+        return popularityScore() > 100 || isHighRated();
+    }
+
+    // Getters e setters reduzidos apenas ao necessário
+
+    public String getTitle() {
+        return title;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
 
-    public String getTitle() {
-        return title;
+    // ... (outros getters/setters mantidos se forem necessários por requisitos externos/testes)
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public String getDescription() {
-        return description;
+    public String getLink() {
+        return link;
     }
 
     public void setLink(String link) {
         this.link = link;
-    }
-
-    public String getLink() {
-        return link;
     }
 
     public String getAccessRights() {
@@ -81,23 +123,20 @@ public abstract class Reference {
         return viewCount;
     }
 
-    public void setViewCount(int viewCount) {
-        this.viewCount = viewCount;
-    }
-
     public int getDownloadCount() {
         return downloadCount;
-    }
-
-    public void setDownloadCount(int downloadCount) {
-        this.downloadCount = downloadCount;
     }
 
     public int getShareCount() {
         return shareCount;
     }
 
-    public void setShareCount(int shareCount) {
+    protected void setViewCount(int viewCount) {
+        this.viewCount = viewCount;
+    }
+
+    protected void setShareCount(int shareCount) {
         this.shareCount = shareCount;
     }
+
 }
