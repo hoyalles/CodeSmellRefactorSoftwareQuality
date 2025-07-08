@@ -64,21 +64,23 @@ public class SearchLog {
         this.logName = logName;
     }
 
-    // Método movido e adaptado para SearchLog
-    public List<String> handleSearch(String text){
+    // ✅ Método movido de RegistrySearch e corrigido para manter buscas em materiais
+    public List<String> handleSearch(String text) {
         List<String> results = new ArrayList<>();
 
-        // Inclui várias buscas de outras classes para exemplo completo
         results.addAll(org.example.studycards.CardManager.getCardManager().searchInCards(text));
         results.addAll(org.example.studyplanner.HabitTracker.getHabitTracker().searchInHabits(text));
         results.addAll(org.example.studyplanner.TodoTracker.getInstance().searchInTodos(text));
+
+        // 🔁 Corrigido: esta chamada é essencial para testes com Audio/Text/VideoReference
         results.addAll(org.example.studyregistry.StudyMaterial.getStudyMaterial().searchInMaterials(text));
+
         results.addAll(org.example.studyregistry.StudyTaskManager.getStudyTaskManager().searchInRegistries(text));
 
         this.addSearchHistory(text);
         this.setNumUsages(this.getNumUsages() + 1);
-
         results.add("\nLogged in: " + this.getLogName());
+
         return results;
     }
 }
