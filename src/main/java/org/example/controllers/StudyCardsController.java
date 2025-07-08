@@ -44,7 +44,8 @@ public class StudyCardsController {
         StringBuilder response = new StringBuilder();
         for(Integer key : keys){
             Card card = cards.get(key);
-            response.append("[id: ").append(key).append("] Question: ").append(card.getQuestion()).append(", Answer: ").append(card.getAnswer()).append("\n");
+            response.append("[id: ").append(key).append("] Question: ").append(card.getQuestion())
+                    .append(", Answer: ").append(card.getAnswer()).append("\n");
         }
         System.out.println(response.toString().isEmpty() ? "No cards" : response.toString());
     }
@@ -113,12 +114,9 @@ public class StudyCardsController {
         }
     }
 
+    // Método mantido para compatibilidade com testes e delega para LeitnerSystem
     public String getRandomCardFromBox() {
-        String response = "";
-        response += leitnerSystem.getMethodName();
-        List<Box> boxes = leitnerSystem.getBoxes();
-        response += leitnerSystem.getRandomCard(boxes);
-        return response;
+        return leitnerSystem.getRandomCardFromBox();
     }
 
     public void handleGetRandomCardFromBox() {
